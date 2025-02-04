@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 
-import Auth from '../utils/auth';
+// import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
 
 const Login = () => {
@@ -19,11 +19,12 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    console.log("Login Data - ", loginData)
     try {
       const data = await login(loginData);
-      Auth.login(data.token);
+      console.log("token - ", data);
     } catch (err) {
-      console.error('Failed to login', err);
+      console.error('Failed to login - ', err);
     }
   };
 
@@ -32,14 +33,14 @@ const Login = () => {
       <form className='form' onSubmit={handleSubmit}>
         <h1>Login</h1>
         <label >Username</label>
-        <input 
+        <input
           type='text'
           name='username'
           value={loginData.username || ''}
           onChange={handleChange}
         />
-      <label>Password</label>
-        <input 
+        <label>Password</label>
+        <input
           type='password'
           name='password'
           value={loginData.password || ''}
@@ -48,7 +49,7 @@ const Login = () => {
         <button type='submit'>Submit Form</button>
       </form>
     </div>
-    
+
   )
 };
 

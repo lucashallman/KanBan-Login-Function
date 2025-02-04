@@ -3,15 +3,20 @@ import { UserLogin } from "../interfaces/UserLogin";
 const login = async (userInfo: UserLogin) => {
   // TODO: make a POST request to the login route
   try {
-    const response = await fetch(`/auth-routes.ts`, {
+    console.log("User Info recievied by API - ", userInfo);
+    const response = await fetch(`/auth/login`, {
       method: 'POST',
-      body: (userInfo.password, userInfo.username),
+      body: JSON.stringify(userInfo),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+      // body: JSON.stringify({username: 'JollyGuru', password:'asda'}),
     })
 
-    const data = await response.json();
+    const data = response.body;
     return data;
   } catch (err) {
-    console.log('Login Post Error');
+    console.log('Login Post Error:', err );
   }
 }
 
