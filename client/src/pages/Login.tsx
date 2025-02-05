@@ -1,6 +1,6 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 
-// import Auth from '../utils/auth';
+import Auth from '../utils/auth';
 import { login } from "../api/authAPI";
 
 const Login = () => {
@@ -8,6 +8,8 @@ const Login = () => {
     username: '',
     password: ''
   });
+
+  const [loginError, setLoginError] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -21,10 +23,18 @@ const Login = () => {
     e.preventDefault();
     console.log("Login Data - ", loginData)
     try {
+      //returns token in json object
       const data = await login(loginData);
-      console.log("token - ", data);
+      if (data.token) {
+        setLoginError(false);
+        Auth.login(data.token);
+      } else {
+        setLoginError(true);
+      }
+
     } catch (err) {
       console.error('Failed to login - ', err);
+      setLoginError(true);
     }
   };
 
@@ -46,6 +56,14 @@ const Login = () => {
           value={loginData.password || ''}
           onChange={handleChange}
         />
+        { loginError ? 
+        (
+          <div className='loginError'>
+            <h2>Incorrect credentials, try again.</h2>
+          </div>
+        ) : (
+          <></>
+        ) }
         <button type='submit'>Submit Form</button>
       </form>
     </div>

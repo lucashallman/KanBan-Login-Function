@@ -13,7 +13,7 @@ const login = async (userInfo: UserLogin) => {
       // body: JSON.stringify({username: 'JollyGuru', password:'asda'}),
     })
 
-    const data = response.body;
+    const data = await response.json();
     return data;
   } catch (err) {
     console.log('Login Post Error:', err );
