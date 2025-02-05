@@ -8,6 +8,8 @@ const Navbar = () => {
   const checkLogin = () => {
     if(auth.loggedIn()) {
       setLoginCheck(true);
+    } else {
+      setLoginCheck(false);
     }
   };
 
@@ -33,7 +35,7 @@ const Navbar = () => {
           <li className='nav-item'>
             <button type='button' onClick={() => {
               auth.logout();
-            }}>Logout</button>
+            }}><Link to='/login'>Logout</Link></button>
           </li>
         )
       }
